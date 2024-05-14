@@ -39,16 +39,6 @@ function App() {
 	const [currentStep, setCurrentStep] = useState(SYMBOL_O)
 	const [winnerSeq, setWinnerSeq] = useState()
 
-	const getSymbolClassName = symbol => {
-		if (symbol === SYMBOL_O) return 'symbol--o'
-		if (symbol === SYMBOL_X) return 'symbol--x'
-		return ''
-	}
-
-	const renderSymbol = symbol => (
-		<span className={`symbol ${getSymbolClassName(symbol)}`}>{symbol}</span>
-	)
-
 	const handleCellClick = index => {
 		if (cells[index] || winnerSeq) {
 			return
@@ -64,7 +54,7 @@ function App() {
 	}
 
 	const handleResetClick = () => {
-		setCells(Array.from({ length: 9 }), () => null)
+		setCells(Array.from({ length: 9 }, () => null))
 		setCurrentStep(SYMBOL_X)
 		setWinnerSeq(null)
 	}
@@ -74,21 +64,22 @@ function App() {
 
 	return (
 		<div className='game'>
-			<div className='game-info'>
-				{isDraw ? 'Ничья' : winnerSeq ? 'Победитель ' : ' Ход: '}
-				{isDraw && renderSymbol(winnerSymbol ?? currentStep)}
-			</div>
+			<GameInfo
+				isDraw={isDraw}
+				winnerSeq={winnerSeq}
+				winnerSymbol={winnerSymbol}
+				currentStep={currentStep}
+			/>
+
 			<div className='game-field'>
 				{cells.map((symbol, index) => {
-					const isWinner = winnerSeq?.includes(index)
 					return (
-						<button
+						<GameCell
 							key={index}
-							className={`cell ${isWinner ? 'cell--win' : ''}`}
+							symbol={symbol}
+							isWinner={winnerSeq?.includes(index)}
 							onClick={() => handleCellClick(index)}
-						>
-							{symbol ? renderSymbol(symbol) : null}
-						</button>
+						/>
 					)
 				})}
 			</div>
@@ -100,3 +91,42 @@ function App() {
 }
 
 export default App
+
+function GameInfo({ isDraw, winnerSymbol, currentStep }) {
+	if (isDraw) {
+		return <div className='game-info'>Ничья</div>
+	}
+
+	if (winnerSymbol) {
+		return (
+			<div className='game-info'>
+				Победитель: <GameSymbol symbol={winnerSymbol} />
+			</div>
+		)
+	}
+
+	return (
+		<div className='game-info'>
+			Ход: <GameSymbol symbol={currentStep} />
+		</div>
+	)
+}
+function GameCell({ isWinner, onClick, symbol }) {
+	return (
+		<button className={`cell ${isWinner ? 'cell--win' : ''}`} onClick={onClick}>
+			{symbol ? <GameSymbol symbol={symbol} /> : null}
+		</button>
+	)
+}
+
+function GameSymbol({ symbol }) {
+	const getSymbolClassName = symbol => {
+		if (symbol === SYMBOL_O) return 'symbol--o'
+		if (symbol === SYMBOL_X) return 'symbol--x'
+		return ''
+	}
+
+	return (
+		<span className={`symbol ${getSymbolClassName(symbol)}`}>{symbol}</span>
+	)
+}
