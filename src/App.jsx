@@ -24,7 +24,7 @@ const computeWinner = cells => {
 	}
 }
 
-function App() {
+function useGameState() {
 	const [cells, setCells] = useState([
 		null,
 		null,
@@ -61,6 +61,28 @@ function App() {
 
 	const winnerSymbol = winnerSeq ? cells[winnerSeq[0]] : undefined
 	const isDraw = !winnerSeq && cells.filter(value => value).length === 9
+
+	return {
+		cells,
+		currentStep,
+		winnerSeq,
+		handleCellClick,
+		handleResetClick,
+		winnerSymbol,
+		isDraw,
+	}
+}
+
+function App() {
+	const {
+		cells,
+		currentStep,
+		winnerSeq,
+		handleCellClick,
+		handleResetClick,
+		winnerSymbol,
+		isDraw,
+	} = useGameState()
 
 	return (
 		<div className='game'>
