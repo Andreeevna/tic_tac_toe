@@ -63,13 +63,20 @@ function App() {
 		setWinnerSeq(winner)
 	}
 
+	const handleResetClick = () => {
+		setCells(Array.from({ length: 9 }), () => null)
+		setCurrentStep(SYMBOL_X)
+		setWinnerSeq(null)
+	}
+
 	const winnerSymbol = winnerSeq ? cells[winnerSeq[0]] : undefined
+	const isDraw = !winnerSeq && cells.filter(value => value).length === 9
 
 	return (
 		<div className='game'>
 			<div className='game-info'>
-				{winnerSeq ? 'Победитель ' : ' Ход: '}
-				{renderSymbol(winnerSymbol ?? currentStep)}
+				{isDraw ? 'Ничья' : winnerSeq ? 'Победитель ' : ' Ход: '}
+				{isDraw && renderSymbol(winnerSymbol ?? currentStep)}
 			</div>
 			<div className='game-field'>
 				{cells.map((symbol, index) => {
@@ -85,6 +92,9 @@ function App() {
 					)
 				})}
 			</div>
+			<button className='reset' onClick={handleResetClick}>
+				Сбросить
+			</button>
 		</div>
 	)
 }
