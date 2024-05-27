@@ -1,15 +1,16 @@
-import styles from './Game.module.css'
+import { clsx } from 'clsx'
+
 import { SYMBOL_O, SYMBOL_X } from './constants'
 
 export function GameSymbol({ symbol }) {
 	const getSymbolClassName = symbol => {
-		if (symbol === SYMBOL_O) return `${styles.symbol__o}`
-		if (symbol === SYMBOL_X) return `${styles.symbol__x}`
+		if (symbol === SYMBOL_O) return `text-red-500`
+		if (symbol === SYMBOL_X) return `text-emerald-500`
 		return ''
 	}
 
 	return (
-		<span className={`${styles.symbol} ${getSymbolClassName(symbol)}`}>
+		<span className={clsx('text-xl	', getSymbolClassName(symbol))}>
 			{symbol}
 		</span>
 	)
