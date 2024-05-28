@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const ResetButton = ({ onClick }) => {
 	return (
 		<button
