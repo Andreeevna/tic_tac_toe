@@ -1,7 +1,11 @@
-import { Game } from "../components/game/game";
+import { Header } from '../components/header'
 
 function App() {
-  return <Game />;
+	return (
+		<div className='bg-slate-100 min-h-screen'>
+			<Header />
+		</div>
+	)
 }
 
-export default App;
+export default App
