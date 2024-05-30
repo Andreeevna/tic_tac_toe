@@ -1,4 +1,4 @@
-import { GameTitle } from '../components/game'
+import { GameInfo, GameTitle } from '../components/game'
 import { Header } from '../components/header'
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
 			<Header />
 			<main className='pt-6 mx-auto max-w-[610px]'>
 				<GameTitle />
+				<GameInfo className='mt-4' />
 			</main>
 		</div>
 	)
