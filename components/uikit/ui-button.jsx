@@ -1,5 +1,16 @@
 import clsx from 'clsx'
 
+/**
+ *
+ * @param{{
+ * children,
+ * className:string,
+ * size: "md" | "lg",
+ * variant: "primary" | "outline"
+ * }} props
+ *
+ */
+
 export const UIbutton = ({ children, className, size, variant }) => {
 	const buttonClassName = clsx(
 		'transition-colors',
