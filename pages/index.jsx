@@ -1,4 +1,5 @@
 import { GameInfo, GameTitle } from '../components/game'
+import { GameField } from '../components/game/game-field'
 import { Header } from '../components/header'
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
 			<main className='pt-6 mx-auto max-w-[610px]'>
 				<GameTitle />
 				<GameInfo className='mt-4' />
+				<GameField className='mt-6' />
 			</main>
 		</div>
 	)
