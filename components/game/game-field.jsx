@@ -1,15 +1,9 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 import { UIbutton } from '../uikit/ui-button'
+import { GAME_SYMBOLS } from './constants'
 import { CrossIon } from './icons/CrossIon'
 import { ZeroIcon } from './icons/ZeroIcon'
-
-const GAME_SYMBOLS = {
-	ZERO: 'zero',
-	CROSS: 'cross',
-	TRINGLE: 'triangle',
-	SQUARE: 'square',
-}
 
 const MOVE_ORDER = [
 	GAME_SYMBOLS.CROSS,
@@ -73,7 +67,7 @@ function GameFieldLayout({ children, className }) {
 	)
 }
 
-function GameMoveInfo({ actions }) {
+function GameMoveInfo({ actions, currentMove, nextMove }) {
 	return (
 		<div className='flex gap-3 items-center'>
 			<div className='mr-auto'>
