@@ -4,7 +4,7 @@ import { SquareIcon } from './icons/SquareIcon'
 import { TringleIcon } from './icons/TringleIcon'
 import { ZeroIcon } from './icons/ZeroIcon'
 
-export const GameSymbol = ({ symbol }) => {
+export const GameSymbol = ({ symbol, className }) => {
 	const Icon =
 		{
 			[GAME_SYMBOLS.CROSS]: CrossIon,
@@ -12,5 +12,5 @@ export const GameSymbol = ({ symbol }) => {
 			[GAME_SYMBOLS.TRINGLE]: TringleIcon,
 			[GAME_SYMBOLS.SQUARE]: SquareIcon,
 		}[symbol] ?? CrossIon
-	return <Icon />
+	return <Icon className={className} />
 }

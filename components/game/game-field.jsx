@@ -1,16 +1,8 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 import { UIbutton } from '../uikit/ui-button'
-import { GAME_SYMBOLS } from './constants'
-import { CrossIon } from './icons/CrossIon'
-import { ZeroIcon } from './icons/ZeroIcon'
-
-const MOVE_ORDER = [
-	GAME_SYMBOLS.CROSS,
-	GAME_SYMBOLS.ZERO,
-	GAME_SYMBOLS.TRINGLE,
-	GAME_SYMBOLS.SQUARE,
-]
+import { GAME_SYMBOLS, MOVE_ORDER } from './constants'
+import { GameSymbol } from './game-symbol'
 
 function getNextMove(currentMove) {
 	const nextMoveIndex = MOVE_ORDER.indexOf(currentMove) + 1
@@ -18,14 +10,28 @@ function getNextMove(currentMove) {
 }
 
 export const GameField = ({ className }) => {
-	const [cells, setSells] = useState(() => new Array(19 * 19).fill(null))
-	const [currentMove, setCurrentMove] = useState(GAME_SYMBOLS.CROSS)
+	const [{ cells, currentMove }, setGameState] = useState(() => ({
+		cells: new Array(19 * 19).fill(null),
+		currentMove: GAME_SYMBOLS.CROSS,
+	}))
 
 	const nextMove = getNextMove(currentMove)
+
+	const handleCellClick = index => {
+		setGameState(lastGameState => ({
+			...lastGameState,
+			currentMove: getNextMove(lastGameState.currentMove),
+			cells: lastGameState.cells.map((cell, i) =>
+				i === index ? lastGameState.currentMove : cell
+			),
+		}))
+	}
 
 	return (
 		<GameFieldLayout className={className}>
 			<GameMoveInfo
+				currentMove={currentMove}
+				nextMove={nextMove}
 				actions={
 					<>
 						<UIbutton size='md' variant='primary'>
@@ -38,17 +44,24 @@ export const GameField = ({ className }) => {
 				}
 			/>
 			<GameGrid>
-				{cells.map((_, i) => {
-					return <GameCell key={i}></GameCell>
+				{cells.map((symbol, i) => {
+					return (
+						<GameCell key={i} onClick={() => handleCellClick(i)}>
+							{symbol && <GameSymbol className='w-5 h-5' symbol={symbol} />}
+						</GameCell>
+					)
 				})}
 			</GameGrid>
 		</GameFieldLayout>
 	)
 }
 
-function GameCell({ children }) {
+function GameCell({ children, onClick }) {
 	return (
-		<button className='border border-slate-200 -ml-px -mt-px flex items-center justify-center'>
+		<button
+			onClick={onClick}
+			className='border border-slate-200 -ml-px -mt-px flex items-center justify-center'
+		>
 			{children}
 		</button>
 	)
@@ -72,11 +85,11 @@ function GameMoveInfo({ actions, currentMove, nextMove }) {
 		<div className='flex gap-3 items-center'>
 			<div className='mr-auto'>
 				<div className='flex items-center gap-1 text-xl leading-tight font-semibold'>
-					Ход: <ZeroIcon className={'w-5 h-5'} />
+					Ход: <GameSymbol symbol={currentMove} className={'w-5 h-5'} />{' '}
 				</div>
 				<div className='flex items-center gap-1 text-xs leading-tight text-slate-400'>
 					Следующий:
-					<CrossIon />
+					<GameSymbol symbol={nextMove} className={'w-3 h-3'} />
 				</div>
 			</div>
 			{actions}
