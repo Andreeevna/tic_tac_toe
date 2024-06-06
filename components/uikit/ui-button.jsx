@@ -16,7 +16,7 @@ export const UIbutton = ({ children, className, size, variant }) => {
 		'transition-colors',
 		className,
 		{
-			md: 'rounded px-6 text-sm leading-tight',
+			md: 'rounded px-6 py-2 text-sm leading-tight',
 			lg: 'rounded-lg px-5 py-2 text-2xl leading-tight',
 		}[size],
 		{
