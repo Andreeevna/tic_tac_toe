@@ -1,11 +1,34 @@
 import clsx from 'clsx'
+import { useState } from 'react'
 import { UIbutton } from '../uikit/ui-button'
 import { CrossIon } from './icons/CrossIon'
 import { ZeroIcon } from './icons/ZeroIcon'
 
-const ceils = new Array(19 * 19).fill(null)
+const GAME_SYMBOLS = {
+	ZERO: 'zero',
+	CROSS: 'cross',
+	TRINGLE: 'triangle',
+	SQUARE: 'square',
+}
+
+const MOVE_ORDER = [
+	GAME_SYMBOLS.CROSS,
+	GAME_SYMBOLS.ZERO,
+	GAME_SYMBOLS.TRINGLE,
+	GAME_SYMBOLS.SQUARE,
+]
+
+function getNextMove(currentMove) {
+	const nextMoveIndex = MOVE_ORDER.indexOf(currentMove) + 1
+	return MOVE_ORDER[nextMoveIndex] ?? MOVE_ORDER[0]
+}
 
 export const GameField = ({ className }) => {
+	const [cells, setSells] = useState(() => new Array(19 * 19).fill(null))
+	const [currentMove, setCurrentMove] = useState(GAME_SYMBOLS.CROSS)
+
+	const nextMove = getNextMove(currentMove)
+
 	return (
 		<GameFieldLayout className={className}>
 			<GameMoveInfo
@@ -21,7 +44,7 @@ export const GameField = ({ className }) => {
 				}
 			/>
 			<GameGrid>
-				{ceils.map((_, i) => {
+				{cells.map((_, i) => {
 					return <GameCell key={i}></GameCell>
 				})}
 			</GameGrid>
