@@ -15,7 +15,7 @@ export const Header = () => {
 			</UIbutton>
 
 			<button className='ml-auto flex items-center gap-2 text-start transition-colors text-teal-600 hover:text-teal-500 '>
-				<Profile />
+				<Profile name='Paromoveg' rating='1230' />
 				<ArrowDownIcon />
 			</button>
 		</header>

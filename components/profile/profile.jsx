@@ -2,9 +2,9 @@ import clsx from 'clsx'
 
 import Image from 'next/image'
 
-import Avatar from './avatar.png'
+import AvatarSrc from './avatar.png'
 
-export const Profile = ({ className }) => {
+export const Profile = ({ className, name, rating, avatar = AvatarSrc }) => {
 	return (
 		<div
 			className={clsx(
@@ -12,11 +12,11 @@ export const Profile = ({ className }) => {
 				className
 			)}
 		>
-			<Image src={Avatar} width={48} height={48} alt='avatar' unoptimized />
+			<Image src={avatar} width={48} height={48} alt='avatar' unoptimized />
 			<div>
-				<div className='text-lg leading-tight'>Paramovevg</div>
+				<div className='text-lg leading-tight'>{name}</div>
 				<div className='text-slate-400 text-xs leading-tight'>
-					Рейтинг: 1230
+					Рейтинг: {rating}
 				</div>
 			</div>
 		</div>
