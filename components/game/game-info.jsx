@@ -39,7 +39,7 @@ const players = [
 	},
 ]
 
-export const GameInfo = ({ className }) => {
+export const GameInfo = ({ className, playersCount }) => {
 	return (
 		<div
 			className={clsx(
@@ -47,7 +47,7 @@ export const GameInfo = ({ className }) => {
 				'bg-white rounded-2xl shadow-md px-8 py-4 grid grid-cols-2 justify-between gap-3'
 			)}
 		>
-			{players.map((player, index) => {
+			{players.slice(0, playersCount).map((player, index) => {
 				return (
 					<PlayerInfo
 						key={player.id}
