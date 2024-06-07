@@ -13,8 +13,8 @@ export const Profile = ({ className, name, rating, avatar = AvatarSrc }) => {
 			)}
 		>
 			<Image src={avatar} width={48} height={48} alt='avatar' unoptimized />
-			<div>
-				<div className='text-lg leading-tight'>{name}</div>
+			<div className='overflow-hidden'>
+				<div className='text-lg leading-tight truncate'>{name}</div>
 				<div className='text-slate-400 text-xs leading-tight'>
 					Рейтинг: {rating}
 				</div>
