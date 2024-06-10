@@ -70,10 +70,25 @@ function PlayerInfo({ playerInfo, isRight, isTimerRunning }) {
 	const isDanger = seconds < 10
 
 	useEffect(() => {
-		setInterval(() => {
-			setSeconds(s => Math.max(s - 1, 0))
-		}, 1000)
-	}, [])
+		if (isTimerRunning) {
+			const interval = setInterval(() => {
+				setSeconds(s => Math.max(s - 1, 0))
+			}, 1000)
+
+			return () => {
+				clearInterval(interval)
+				setSeconds(60)
+			}
+		}
+	}, [isTimerRunning])
+
+	const getTimerColor = () => {
+		if (isTimerRunning) {
+			return isDanger ? 'text-orange-600' : 'text-slate-900'
+		}
+		return 'text-slate-200'
+	}
+
 	return (
 		<div className='flex gap-3 items-center'>
 			<div className={clsx('relative', isRight && 'order-3')}>
@@ -92,9 +107,9 @@ function PlayerInfo({ playerInfo, isRight, isTimerRunning }) {
 			></div>
 			<div
 				className={clsx(
-					'text-slate-900 text-lg font-semibold',
+					'text-slate-900 text-lg font-semibold w-[60px]',
 					isRight && 'order-1',
-					isDanger ? 'text-orange-600' : 'text-slate-900'
+					getTimerColor()
 				)}
 			>
 				{minutesString}:{secondsString}
