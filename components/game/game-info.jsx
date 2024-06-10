@@ -3,6 +3,7 @@ import { Profile } from '../profile'
 import { GAME_SYMBOLS } from './constants'
 import { GameSymbol } from './game-symbol'
 
+import { useEffect, useState } from 'react'
 import avatarSrc1 from './images/avatar1.png'
 import avatarSrc3 from './images/avatar2.png'
 import avatarSrc2 from './images/avatar3.png'
@@ -61,6 +62,17 @@ export const GameInfo = ({ className, playersCount }) => {
 }
 
 function PlayerInfo({ playerInfo, isRight }) {
+	const [seconds, setSeconds] = useState(60)
+
+	const minutesString = String(Math.floor(seconds / 60)).padStart(2, '0')
+	const secondsString = String(seconds % 60).padStart(2, '0')
+	const isDanger = seconds < 10
+
+	useEffect(() => {
+		setInterval(() => {
+			setSeconds(s => Math.max(s - 1))
+		}, 1000)
+	}, [])
 	return (
 		<div className='flex gap-3 items-center'>
 			<div className={clsx('relative', isRight && 'order-3')}>
@@ -80,10 +92,11 @@ function PlayerInfo({ playerInfo, isRight }) {
 			<div
 				className={clsx(
 					'text-slate-900 text-lg font-semibold',
-					isRight && 'order-1'
+					isRight && 'order-1',
+					isDanger ? 'text-orange-600' : 'text-slate-900'
 				)}
 			>
-				01:08
+				{minutesString}:{secondsString}
 			</div>
 		</div>
 	)
