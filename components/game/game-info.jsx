@@ -40,7 +40,7 @@ const players = [
 	},
 ]
 
-export const GameInfo = ({ className, playersCount }) => {
+export const GameInfo = ({ className, playersCount, currentMove }) => {
 	return (
 		<div
 			className={clsx(
@@ -54,6 +54,7 @@ export const GameInfo = ({ className, playersCount }) => {
 						key={player.id}
 						playerInfo={player}
 						isRight={index % 2 === 1}
+						isTimerRunning={currentMove === player.symbol}
 					/>
 				)
 			})}
@@ -61,7 +62,7 @@ export const GameInfo = ({ className, playersCount }) => {
 	)
 }
 
-function PlayerInfo({ playerInfo, isRight }) {
+function PlayerInfo({ playerInfo, isRight, isTimerRunning }) {
 	const [seconds, setSeconds] = useState(60)
 
 	const minutesString = String(Math.floor(seconds / 60)).padStart(2, '0')
@@ -70,7 +71,7 @@ function PlayerInfo({ playerInfo, isRight }) {
 
 	useEffect(() => {
 		setInterval(() => {
-			setSeconds(s => Math.max(s - 1))
+			setSeconds(s => Math.max(s - 1, 0))
 		}, 1000)
 	}, [])
 	return (
