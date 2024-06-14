@@ -5,7 +5,7 @@ import { Header } from '../components/header'
 
 function App() {
 	const [playersCount] = useState(2)
-	const { cells, currentMove, nextMove, handleCellClick } =
+	const { cells, currentMove, nextMove, handleCellClick, winnerSequence } =
 		useGameState(playersCount)
 
 	return (
@@ -25,6 +25,7 @@ function App() {
 					currentMove={currentMove}
 					nextMove={nextMove}
 					handleCellClick={handleCellClick}
+					winnerSequence={winnerSequence}
 				/>
 			</main>
 		</div>
