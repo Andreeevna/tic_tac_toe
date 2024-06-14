@@ -8,11 +8,36 @@ function getNextMove(currentMove, playersCount) {
 	return slicedMoveOrder[nextMoveIndex] ?? slicedMoveOrder[0]
 }
 
+function computerWinner(cells, sequenceSize = 5, filedSize = 19) {
+	const gap = Math.floor(sequenceSize / 2)
+
+	function getSequenceIndexes(i) {
+		const res = [[], [], [], []]
+
+		for (let j = 0; j < sequenceSize; j++) {
+			res[0].push(j - gap + i)
+			res[1].push(filedSize * (j - gap) + (j - gap) + i)
+			res[2].push(-filedSize * (j - gap) + (j - gap) + i)
+			res[3].push(filedSize * (j - gap) + i)
+		}
+
+		return res
+	}
+
+	for (let i = 0; i < cells.length; i++) {
+		if (cells[i]) {
+			console.log(getSequenceIndexes(i))
+		}
+	}
+}
+
 export function useGameState(playersCount) {
 	const [{ cells, currentMove }, setGameState] = useState(() => ({
 		cells: new Array(19 * 19).fill(null),
 		currentMove: GAME_SYMBOLS.CROSS,
 	}))
+
+	console.log(computerWinner(cells))
 
 	const nextMove = getNextMove(currentMove, playersCount)
 
