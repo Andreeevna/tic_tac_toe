@@ -3,21 +3,27 @@ import { GAME_SYMBOLS } from './constants'
 import { computerWinner, getNextMove } from './model'
 
 export function useGameState(playersCount) {
-	const [{ cells, currentMove }, setGameState] = useState(() => ({
-		cells: new Array(19 * 19).fill(null),
-		currentMove: GAME_SYMBOLS.CROSS,
-		playersTimeOver: [],
-	}))
+	const [{ cells, currentMove, playersTimeOver }, setGameState] = useState(
+		() => ({
+			cells: new Array(19 * 19).fill(null),
+			currentMove: GAME_SYMBOLS.CROSS,
+			playersTimeOver: [],
+		})
+	)
 
 	console.log(computerWinner(cells))
 	const winnerSequence = computerWinner(cells)
-	const nextMove = getNextMove(currentMove, playersCount)
+	const nextMove = getNextMove(currentMove, playersCount, playersTimeOver)
 
 	// обработка клика по клетке
 	const handleCellClick = index => {
 		setGameState(lastGameState => ({
 			...lastGameState,
-			currentMove: getNextMove(lastGameState.currentMove, playersCount),
+			currentMove: getNextMove(
+				lastGameState.currentMove,
+				playersCount,
+				lastGameState.playersTimeOver
+			),
 			cells: lastGameState.cells.map((cell, i) =>
 				i === index ? lastGameState.currentMove : cell
 			),
@@ -28,7 +34,11 @@ export function useGameState(playersCount) {
 		setGameState(lastGameState => ({
 			...lastGameState,
 			playersTimeOver: [...lastGameState.playersTimeOver, symbol],
-			currentMove: getNextMove(lastGameState.currentMove, playersCount),
+			currentMove: getNextMove(
+				lastGameState.currentMove,
+				playersCount,
+				lastGameState.playersTimeOver
+			),
 		}))
 	}
 

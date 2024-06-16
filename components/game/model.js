@@ -48,8 +48,10 @@ export function computerWinner(cells, sequenceSize = 5, filedSize = 19) {
 	return undefined
 }
 
-export function getNextMove(currentMove, playersCount) {
-	const slicedMoveOrder = MOVE_ORDER.slice(0, playersCount)
+export function getNextMove(currentMove, playersCount, playersTimeOver) {
+	const slicedMoveOrder = MOVE_ORDER.slice(0, playersCount).filter(
+		symbol => !playersTimeOver.includes(symbol)
+	)
 
 	const nextMoveIndex = slicedMoveOrder.indexOf(currentMove) + 1
 	return slicedMoveOrder[nextMoveIndex] ?? slicedMoveOrder[0]
