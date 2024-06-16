@@ -5,8 +5,14 @@ import { Header } from '../components/header'
 
 function App() {
 	const [playersCount] = useState(4)
-	const { cells, currentMove, nextMove, handleCellClick, winnerSequence } =
-		useGameState(playersCount)
+	const {
+		cells,
+		currentMove,
+		nextMove,
+		handleCellClick,
+		winnerSequence,
+		handlePlayerTimeOver,
+	} = useGameState(playersCount)
 
 	return (
 		<div className='bg-slate-100 min-h-screen'>
@@ -18,6 +24,7 @@ function App() {
 					playersCount={playersCount}
 					currentMove={currentMove}
 					isWinner={!!winnerSequence}
+					onPlayerTimeOver={handlePlayerTimeOver}
 				/>
 				<GameField
 					className='mt-6'
