@@ -15,6 +15,9 @@ export function useGameState(playersCount) {
 	const winnerSequence = computerWinner(cells)
 	const nextMove = getNextMove(currentMove, playersCount, playersTimeOver)
 
+	const winnerSymbol =
+		nextMove === currentMove ? currentMove : winnerSequence?.[0]
+
 	// обработка клика по клетке
 	const handleCellClick = index => {
 		setGameState(lastGameState => ({
@@ -49,5 +52,6 @@ export function useGameState(playersCount) {
 		handleCellClick,
 		handlePlayerTimeOver,
 		winnerSequence,
+		winnerSymbol,
 	}
 }

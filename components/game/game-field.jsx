@@ -9,6 +9,7 @@ export const GameField = ({
 	nextMove,
 	handleCellClick,
 	winnerSequence,
+	winnerSymbol,
 }) => {
 	return (
 		<GameFieldLayout className={className}>
@@ -30,7 +31,7 @@ export const GameField = ({
 				{cells.map((symbol, i) => {
 					return (
 						<GameCell
-							disabled={!!winnerSequence}
+							disabled={!!winnerSymbol}
 							isWinner={winnerSequence?.includes(i)}
 							key={i}
 							onClick={() => handleCellClick(i)}
