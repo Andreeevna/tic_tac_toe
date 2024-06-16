@@ -4,7 +4,7 @@ import { GameField } from '../components/game/game-field'
 import { Header } from '../components/header'
 
 function App() {
-	const [playersCount] = useState(2)
+	const [playersCount] = useState(4)
 	const { cells, currentMove, nextMove, handleCellClick, winnerSequence } =
 		useGameState(playersCount)
 
