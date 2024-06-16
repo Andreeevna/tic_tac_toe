@@ -75,6 +75,7 @@ function PlayerInfo({ playerInfo, isRight, isTimerRunning, onTimeOver }) {
 	const minutesString = String(Math.floor(seconds / 60)).padStart(2, '0')
 	const secondsString = String(seconds % 60).padStart(2, '0')
 	const isDanger = seconds < 10
+	console.log(isDanger)
 
 	useEffect(() => {
 		if (isTimerRunning) {
@@ -121,7 +122,7 @@ function PlayerInfo({ playerInfo, isRight, isTimerRunning, onTimeOver }) {
 			></div>
 			<div
 				className={clsx(
-					'text-slate-900 text-lg font-semibold w-[60px]',
+					'text-lg font-semibold w-[60px]',
 					isRight && 'order-1',
 					getTimerColor()
 				)}
