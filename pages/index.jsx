@@ -17,6 +17,7 @@ function App() {
 					className='mt-4'
 					playersCount={playersCount}
 					currentMove={currentMove}
+					isWinner={!!winnerSequence}
 				/>
 				<GameField
 					className='mt-6'
