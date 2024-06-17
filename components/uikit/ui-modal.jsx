@@ -3,27 +3,51 @@ import clsx from 'clsx'
 /**
  *
  * @param{{
+ * className: string,
  * width: 'md' | 'full'
+ * isOpen: boolean
+ * onClose: ()=>void
  * }} props
  *
  */
 
-export const UImodal = ({ width = 'md', className, children }) => {
+export const UImodal = ({
+	width = 'md',
+	className,
+	children,
+	isOpen = false,
+	onClose,
+}) => {
+	const handleClick = e => {
+		const inModal = e.target.closest('[data-id=modal]')
+		if (inModal) return
+		onClose()
+	}
+
+	if (!isOpen) {
+		return null
+	}
+
 	return (
 		<div
+			onClick={handleClick}
 			className={clsx(
-				'fixed inset-0 bg-slate-900/60 backdrop-blur pt-10 pb-10',
+				'fixed inset-0 bg-slate-900/60 backdrop-blur pt-10 pb-10 overflow-y-auto',
 				className
 			)}
 		>
 			<div
+				data-id='modal'
 				className={clsx(
 					'bg-white rounded-lg min-h-[320px] mx-auto relative',
 					'flex flex-col',
 					{ md: 'max-w-[640px] w-full', full: 'mx-5' }[width]
 				)}
 			>
-				<button className='w-8 h-8 rounded flex items-center justify-center bg-white/10 hover:bg-white/40 absolute top-0 -right-16 transition-colors'>
+				<button
+					onClick={onClose}
+					className='w-8 h-8 rounded flex items-center justify-center bg-white/10 hover:bg-white/40 absolute top-0 -right-16 transition-colors'
+				>
 					<CrossLightIcon className='w-4 h-4 text-white' />
 				</button>
 				{children}

@@ -33,9 +33,16 @@ function App() {
 				<div className='my-4'>
 					<GameSymbol symbol={winnerSymbol} />
 				</div>
-				<UImodal width='md'>
+				<UImodal
+					width='md'
+					isOpen={winnerSymbol}
+					onClose={() => console.log('close')}
+				>
 					<UImodal.header>Игра завершена</UImodal.header>
 					<UImodal.body>
+						<div className='text-sm'>
+							Победитель: <span className='text-teal-600'>Paromonov</span>
+						</div>
 						<div className='text-sm'>
 							Победитель: <span className='text-teal-600'>Paromonov</span>
 						</div>
