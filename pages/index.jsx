@@ -3,6 +3,7 @@ import { GameInfo, GameTitle, useGameState } from '../components/game'
 import { GameField } from '../components/game/game-field'
 import { GameSymbol } from '../components/game/game-symbol'
 import { Header } from '../components/header'
+import { UIbutton } from '../components/uikit/ui-button'
 import { UImodal } from '../components/uikit/ui-modal'
 
 function App() {
@@ -32,7 +33,22 @@ function App() {
 				<div className='my-4'>
 					<GameSymbol symbol={winnerSymbol} />
 				</div>
-				<UImodal width='md' />
+				<UImodal width='md'>
+					<UImodal.header>Игра завершена</UImodal.header>
+					<UImodal.body>
+						<div className='text-sm'>
+							Победитель: <span className='text-teal-600'>Paromonov</span>
+						</div>
+					</UImodal.body>
+					<UImodal.footer>
+						<UIbutton size='md' variant='outline'>
+							Вернуться
+						</UIbutton>
+						<UIbutton size='md' variant='primary'>
+							Играть снова
+						</UIbutton>
+					</UImodal.footer>
+				</UImodal>
 				<GameField
 					className='mt-6'
 					playersCount={playersCount}

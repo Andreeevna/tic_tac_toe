@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+
 /**
  *
  * @param{{
@@ -6,24 +8,46 @@
  *
  */
 
-import clsx from 'clsx'
-
-export const UImodal = ({ width = 'md' }) => {
+export const UImodal = ({ width = 'md', className, children }) => {
 	return (
 		<div
-			className='fixed inset-0
-	bg-slate-900/60 backdrop-blur pt-10 pb-10'
+			className={clsx(
+				'fixed inset-0 bg-slate-900/60 backdrop-blur pt-10 pb-10',
+				className
+			)}
 		>
 			<div
 				className={clsx(
 					'bg-white rounded-lg min-h-[320px] mx-auto relative',
+					'flex flex-col',
 					{ md: 'max-w-[640px] w-full', full: 'mx-5' }[width]
 				)}
 			>
 				<button className='w-8 h-8 rounded flex items-center justify-center bg-white/10 hover:bg-white/40 absolute top-0 -right-16 transition-colors'>
 					<CrossLightIcon className='w-4 h-4 text-white' />
 				</button>
+				{children}
 			</div>
+		</div>
+	)
+}
+
+UImodal.header = function UImodalHeader({ children, className }) {
+	return (
+		<div className={clsx(className, 'px-6 pt-6 pb-4 text-2xl')}>{children}</div>
+	)
+}
+
+UImodal.body = function UImodalBody({ children, className }) {
+	return <div className={clsx(className, 'px-6')}>{children}</div>
+}
+
+UImodal.footer = function UImodalFooter({ children, className }) {
+	return (
+		<div
+			className={clsx(className, 'mt-auto px-6 pb-6 flex gap-4 justify-end')}
+		>
+			{children}
 		</div>
 	)
 }
