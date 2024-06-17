@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { createPortal } from 'react-dom'
 
 /**
  *
@@ -28,7 +29,7 @@ export const UImodal = ({
 		return null
 	}
 
-	return (
+	const modal = (
 		<div
 			onClick={handleClick}
 			className={clsx(
@@ -54,6 +55,8 @@ export const UImodal = ({
 			</div>
 		</div>
 	)
+
+	return createPortal(modal, document.getElementById('modals'))
 }
 
 UImodal.header = function UImodalHeader({ children, className }) {
