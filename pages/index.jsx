@@ -3,6 +3,7 @@ import { GameInfo, GameTitle, useGameState } from '../components/game'
 import { GameField } from '../components/game/game-field'
 import { GameSymbol } from '../components/game/game-symbol'
 import { Header } from '../components/header'
+import { UImodal } from '../components/uikit/ui-modal'
 
 function App() {
 	const [playersCount] = useState(4)
@@ -31,6 +32,7 @@ function App() {
 				<div className='my-4'>
 					<GameSymbol symbol={winnerSymbol} />
 				</div>
+				<UImodal width='md' />
 				<GameField
 					className='mt-6'
 					playersCount={playersCount}
