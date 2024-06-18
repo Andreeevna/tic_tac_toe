@@ -1,8 +1,8 @@
+import { CrossIon } from '../game-new/ui/icons/CrossIon'
+import { SquareIcon } from '../game-new/ui/icons/SquareIcon'
+import { TringleIcon } from '../game-new/ui/icons/TringleIcon'
+import { ZeroIcon } from '../game-new/ui/icons/ZeroIcon'
 import { GAME_SYMBOLS } from './constants'
-import { CrossIon } from './icons/CrossIon'
-import { SquareIcon } from './icons/SquareIcon'
-import { TringleIcon } from './icons/TringleIcon'
-import { ZeroIcon } from './icons/ZeroIcon'
 
 export const GameSymbol = ({ symbol, className }) => {
 	const Icon =
