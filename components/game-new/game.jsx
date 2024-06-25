@@ -98,7 +98,7 @@ export const Game = () => {
 						avatar={player.avatar}
 						name={player.name}
 						rating={player.rating}
-						seconds={gameState.timers[player.symbol]}
+						timer={gameState.timers[player.symbol]}
 						symbol={player.symbol}
 						isRight={index % 2 === 1}
 					/>
