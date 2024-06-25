@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useNow } from '../../lib/timers'
 import { GameSymbol } from './game-symbol'
 
 export const PlayerInfo = ({
@@ -12,13 +12,15 @@ export const PlayerInfo = ({
 	timer,
 	timerStartAt,
 }) => {
-	const seconds = Math.ceil(timer / 1000)
+	const now = useNow(1000, timerStartAt)
+	const mils = Math.max(now ? timer - (now - timerStartAt) : timer, 0)
+
+	const seconds = Math.ceil(mils / 1000)
 	const minutesString = String(Math.floor(seconds / 60)).padStart(2, '0')
 	const secondsString = String(seconds % 60).padStart(2, '0')
 
 	const isDanger = seconds < 10
 
-	console.log(isDanger)
 	const getTimerColor = () => {
 		if (timerStartAt) {
 			return isDanger ? 'text-orange-600' : 'text-slate-900'
@@ -56,24 +58,4 @@ export const PlayerInfo = ({
 			</div>
 		</div>
 	)
-}
-
-function useNow(inderval, enabled) {
-	const [now, setNow] = useState()
-
-	useEffect(() => {
-		if (!enabled) {
-			setNow(undefined)
-		}
-
-		const int = setInterval(() => {
-			setNow(Date.now())
-		}, inderval)
-
-		return () => {
-			clearInterval(int)
-		}
-	}, [inderval, enabled])
-
-	return now
 }
