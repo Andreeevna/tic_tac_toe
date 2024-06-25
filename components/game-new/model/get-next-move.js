@@ -1,15 +1,9 @@
-// export function getNextMove(currentMove, playersCount, playersTimeOver) {
-// 	const slicedMoveOrder = MOVE_ORDER.slice(0, playersCount).filter(
-// 		symbol => !playersTimeOver.includes(symbol)
-// 	)
-// 	const nextMoveIndex = slicedMoveOrder.indexOf(currentMove) + 1
-// 	return slicedMoveOrder[nextMoveIndex] ?? slicedMoveOrder[0]
-// }
-
 import { MOVE_ORDER } from '../ui/constants'
 
-export function getNextMove({ currentMove, playersCount }) {
-	const slicedMoveOrder = MOVE_ORDER.slice(0, playersCount)
+export function getNextMove({ currentMove, playersCount, timers }) {
+	const slicedMoveOrder = MOVE_ORDER.slice(0, playersCount).filter(
+		symbol => timers[symbol] > 0
+	)
 	const nextMoveIndex = slicedMoveOrder.indexOf(currentMove) + 1
 	return slicedMoveOrder[nextMoveIndex] ?? slicedMoveOrder[0]
 }

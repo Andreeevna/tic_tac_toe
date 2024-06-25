@@ -1,4 +1,5 @@
 import { useReducer } from 'react'
+import { useInterval } from '../lib/timers'
 import { computePlayerTimer } from './model/compute-player-timer'
 import { computeWinner } from './model/compute-winner'
 import { computeWinnerSymbol } from './model/compute-winner-symbol'
@@ -30,6 +31,14 @@ export const Game = () => {
 		},
 		initGameState
 	)
+
+	useInterval(100, gameState.currentMoveStart, () => {
+		dispatch({
+			type: GAME_STATE_ACTIONS.TICK,
+			now: Date.now(),
+		})
+	})
+
 	const winnerSequence = computeWinner(gameState)
 	const nextMove = getNextMove(gameState)
 	const winnerSymbol = computeWinnerSymbol(gameState, {
