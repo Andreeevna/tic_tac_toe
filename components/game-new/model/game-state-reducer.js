@@ -33,15 +33,29 @@ export const gameStateReducer = (state, action) => {
 
 			return {
 				...state,
+				timers: updateTimers(state, now),
 				currentMove: getNextMove(state),
 				currentMoveStart: now,
-				cells: state.cells.map((cell, i) =>
-					i === index ? state.currentMove : cell
-				),
+				cells: updateCell(state, index),
 			}
 		}
 		default: {
 			return state
 		}
+	}
+}
+function updateCell(gameState, index) {
+	return gameState.cells.map((cell, i) =>
+		i === index ? gameState.currentMove : cell
+	)
+}
+
+function updateTimers(gameState, now) {
+	const diff = now - gameState.currentMoveStart
+	const timer = gameState.timers[gameState.currentMove]
+
+	return {
+		...gameState.timers,
+		[gameState.currentMove]: timer - diff,
 	}
 }
