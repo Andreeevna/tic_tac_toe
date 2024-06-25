@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { GameSymbol } from './game-symbol'
 
 export const PlayerInfo = ({
@@ -55,4 +56,24 @@ export const PlayerInfo = ({
 			</div>
 		</div>
 	)
+}
+
+function useNow(inderval, enabled) {
+	const [now, setNow] = useState()
+
+	useEffect(() => {
+		if (!enabled) {
+			setNow(undefined)
+		}
+
+		const int = setInterval(() => {
+			setNow(Date.now())
+		}, inderval)
+
+		return () => {
+			clearInterval(int)
+		}
+	}, [inderval, enabled])
+
+	return now
 }
