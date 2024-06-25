@@ -8,9 +8,10 @@ export const PlayerInfo = ({
 	rating,
 	avatar,
 	symbol,
-	isTimerRunning,
-	seconds,
+	timer,
+	timerStartAt,
 }) => {
+	const seconds = Math.ceil(timer / 1000)
 	const minutesString = String(Math.floor(seconds / 60)).padStart(2, '0')
 	const secondsString = String(seconds % 60).padStart(2, '0')
 
@@ -18,7 +19,7 @@ export const PlayerInfo = ({
 
 	console.log(isDanger)
 	const getTimerColor = () => {
-		if (isTimerRunning) {
+		if (timerStartAt) {
 			return isDanger ? 'text-orange-600' : 'text-slate-900'
 		}
 		return 'text-slate-200'

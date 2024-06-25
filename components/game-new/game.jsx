@@ -1,4 +1,5 @@
 import { useReducer } from 'react'
+import { computePlayerTimer } from './model/compute-player-timer'
 import { computeWinner } from './model/compute-winner'
 import { computeWinnerSymbol } from './model/compute-winner-symbol'
 import {
@@ -22,7 +23,11 @@ const PLAYERS_COUNT = 2
 export const Game = () => {
 	const [gameState, dispatch] = useReducer(
 		gameStateReducer,
-		{ playersCount: PLAYERS_COUNT },
+		{
+			playersCount: PLAYERS_COUNT,
+			defaultTimer: 60000,
+			currentMoveStart: Date.now(),
+		},
 		initGameState
 	)
 	const winnerSequence = computeWinner(gameState)
@@ -35,6 +40,7 @@ export const Game = () => {
 	const winnerPlayer = players.find(player => player.symbol === winnerSymbol)
 
 	const { cells, currentMove } = gameState
+	console.log(gameState)
 
 	return (
 		<>
@@ -48,17 +54,24 @@ export const Game = () => {
 					/>
 				}
 				title={<Gametitle />}
-				playersList={players.slice(0, PLAYERS_COUNT).map((player, index) => (
-					<PlayerInfo
-						key={player.id}
-						avatar={player.avatar}
-						name={player.name}
-						rating={player.rating}
-						seconds={60}
-						symbol={player.symbol}
-						isRight={index % 2 === 1}
-					/>
-				))}
+				playersList={players.slice(0, PLAYERS_COUNT).map((player, index) => {
+					const { timer, timerStartAt } = computePlayerTimer(
+						gameState,
+						player.symbol
+					)
+					return (
+						<PlayerInfo
+							key={player.id}
+							avatar={player.avatar}
+							name={player.name}
+							rating={player.rating}
+							timer={timer}
+							timerStartAt={timerStartAt}
+							symbol={player.symbol}
+							isRight={index % 2 === 1}
+						/>
+					)
+				})}
 				gameMoveInfo={
 					<GameMoveInfo currentMove={currentMove} nextMove={nextMove} />
 				}
@@ -71,6 +84,7 @@ export const Game = () => {
 							dispatch({
 								type: GAME_STATE_ACTIONS.CELL_CLICK,
 								index,
+								now: Date.now(),
 							})
 						}
 						symbol={cell}
@@ -84,7 +98,7 @@ export const Game = () => {
 						avatar={player.avatar}
 						name={player.name}
 						rating={player.rating}
-						seconds={60}
+						seconds={gameState.timers[player.symbol]}
 						symbol={player.symbol}
 						isRight={index % 2 === 1}
 					/>
